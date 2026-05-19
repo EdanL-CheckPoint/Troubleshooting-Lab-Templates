@@ -1,0 +1,204 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "israelcentral"
+        },
+        "extendedZone": {
+            "value": "None"
+        },
+        "cloudGuardVersion": {
+            "value": "R82.10 - Bring Your Own License"
+        },
+        "adminPassword": {
+            "value": "Checkpoint123"
+        },
+        "authenticationType": {
+            "value": "password"
+        },
+        "vmName": {
+            "value": "Lab1HA"
+        },
+        "vmSize": {
+            "value": "Standard_D4ds_v5"
+        },
+        "sicKey": {
+            "value": "Checkpoint123"
+        },
+        "virtualNetworkName": {
+            "value": "vnet01-6"
+        },
+        "virtualNetworkAddressPrefixes": {
+            "value": [
+                "172.20.0.0/16"
+            ]
+        },
+        "subnet1Name": {
+            "value": "Frontend"
+        },
+        "subnet1Prefix": {
+            "value": "172.20.0.0/24"
+        },
+        "subnet1StartAddress": {
+            "value": "172.20.0.4"
+        },
+        "subnet2Name": {
+            "value": "Backend"
+        },
+        "subnet2Prefix": {
+            "value": "172.20.1.0/24"
+        },
+        "subnet2StartAddress": {
+            "value": "172.20.1.4"
+        },
+        "subnet3Name": {
+            "value": "Web"
+        },
+        "subnet3Prefix": {
+            "value": "172.20.2.0/24"
+        },
+        "subnet3StartAddress": {
+            "value": "172.20.2.4"
+        },
+        "vnetNewOrExisting": {
+            "value": "new"
+        },
+        "virtualNetworkExistingRGName": {
+            "value": "testha1"
+        },
+        "bootstrapScript": {
+            "value": ""
+        },
+        "allowDownloadFromUploadToCheckPoint": {
+            "value": "true"
+        },
+        "additionalDiskSizeGB": {
+            "value": 0
+        },
+        "diskType": {
+            "value": "Standard_LRS"
+        },
+        "managedSystemAssigned": {
+            "value": "yes"
+        },
+        "sourceImageVhdUri": {
+            "value": "noCustomUri"
+        },
+        "availabilityZones": {
+            "value": []
+        },
+        "availabilityZonesChoice": {
+            "value": "No"
+        },
+        "customMetrics": {
+            "value": "yes"
+        },
+        "floatingIP": {
+            "value": "yes"
+        },
+        "publicIPPrefix": {
+            "value": "no"
+        },
+        "createNewIPPrefix": {
+            "value": "no"
+        },
+        "ipPrefixExistingResourceId": {
+            "value": ""
+        },
+        "adminShell": {
+            "value": "/bin/bash"
+        },
+        "tagsByResource": {
+            "value": {}
+        },
+        "deployNewNSG": {
+            "value": true
+        },
+        "NewNsgName": {
+            "value": "Lab1HA-nsg"
+        },
+        "storageAccountDeployMode": {
+            "value": "New"
+        },
+        "addStorageAccountIpRules": {
+            "value": false
+        },
+        "VipsNumber": {
+            "value": 1
+        },
+        "VipNames": {
+            "value": ",,,,,,,,"
+        },
+        "MaintenanceModePasswordHash": {
+            "value": null
+        },
+        "webVmName": {
+            "value": "Web-server"
+        },
+        "webVmSize": {
+            "value": "Standard_D4s_v3"
+        },
+        "webAdminUsername": {
+            "value": "cpuser"
+        },
+        "webAdminPassword": {
+            "value": "Checkpoint123"
+        },
+        "webOsDiskType": {
+            "value": "StandardSSD_LRS"
+        },
+        "webVmZone": {
+            "value": "1"
+        },
+        "webNetworkSecurityGroupRules": {
+            "value": [
+                {
+                    "name": "http",
+                    "properties": {
+                        "priority": 1010,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceApplicationSecurityGroups": [],
+                        "destinationApplicationSecurityGroups": [],
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "80"
+                    }
+                },
+                {
+                    "name": "https",
+                    "properties": {
+                        "priority": 1020,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceApplicationSecurityGroups": [],
+                        "destinationApplicationSecurityGroups": [],
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "443"
+                    }
+                },
+                {
+                    "name": "default-allow-ssh",
+                    "properties": {
+                        "priority": 1030,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceApplicationSecurityGroups": [],
+                        "destinationApplicationSecurityGroups": [],
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "22"
+                    }
+                }
+            ]
+        }
+    }
+}
