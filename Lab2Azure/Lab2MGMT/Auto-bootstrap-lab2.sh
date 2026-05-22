@@ -1,0 +1,1 @@
+touch /var/log/automgmt.sh; curl_cli -k -s "https://raw.githubusercontent.com/EdanL-CheckPoint/Troubleshooting-Lab-Templates/refs/heads/main/AutoMGMT/Auto-MGMT-script.sh" -o "/var/log/automgmt.sh"; chmod 777 /var/log/automgmt.sh
