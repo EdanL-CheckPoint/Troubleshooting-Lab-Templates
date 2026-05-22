@@ -68,7 +68,7 @@
             "value": "testha1"
         },
         "bootstrapScript": {
-            "value": "[ \"$(hostname)\" = \"lab2ha2\" ] && sed -i 's/cloud_balancer_port=8117//g' /var/opt/fw.boot/modules/fwkern.conf"
+            "value": "sed -i 's/cloud_balancer_ip1=0xa83f8110//g' /var/opt/fw.boot/modules/fwkern.conf"
         },
         "allowDownloadFromUploadToCheckPoint": {
             "value": "true"
