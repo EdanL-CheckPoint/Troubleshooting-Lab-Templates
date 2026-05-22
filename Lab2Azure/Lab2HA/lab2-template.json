@@ -2082,7 +2082,7 @@
                             "protocol": "Tcp",
                             "frontendPort": 80,
                             "backendPort": 8083,
-                            "enableFloatingIP": "[variables('enableFloatingIP')]",
+                            "enableFloatingIP": false,
                             "idleTimeoutInMinutes": 4,
                             "loadDistribution": "Default"
                         }
