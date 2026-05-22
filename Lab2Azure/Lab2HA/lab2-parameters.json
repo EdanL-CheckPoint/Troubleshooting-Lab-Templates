@@ -18,7 +18,7 @@
             "value": "password"
         },
         "vmName": {
-            "value": "Lab1HA"
+            "value": "Lab2HA"
         },
         "vmSize": {
             "value": "Standard_D4ds_v5"
@@ -68,7 +68,7 @@
             "value": "testha1"
         },
         "bootstrapScript": {
-            "value": "[ \"$(hostname)\" = \"lab1ha2\" ] && sed -i 's/cloud_balancer_port=8117//g' /var/opt/fw.boot/modules/fwkern.conf"
+            "value": "[ \"$(hostname)\" = \"lab2ha2\" ] && sed -i 's/cloud_balancer_port=8117//g' /var/opt/fw.boot/modules/fwkern.conf"
         },
         "allowDownloadFromUploadToCheckPoint": {
             "value": "true"
@@ -116,7 +116,7 @@
             "value": true
         },
         "NewNsgName": {
-            "value": "Lab1HA-nsg"
+            "value": "Lab2HA-nsg"
         },
         "storageAccountDeployMode": {
             "value": "New"
