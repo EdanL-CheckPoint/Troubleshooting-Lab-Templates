@@ -64,9 +64,6 @@
         "vnetNewOrExisting": {
             "value": "new"
         },
-        "virtualNetworkExistingRGName": {
-            "value": "testha1"
-        },
         "bootstrapScript": {
             "value": ""
         },
