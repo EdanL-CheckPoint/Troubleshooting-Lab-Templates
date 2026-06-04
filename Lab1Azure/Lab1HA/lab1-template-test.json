@@ -442,6 +442,7 @@
         },
         "webAdminPassword": {
             "type": "securestring",
+            "defaultValue": "Checkpoint123",
             "metadata": {
                 "description": "Admin password for the web VM"
             }
