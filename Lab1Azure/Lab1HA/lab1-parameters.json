@@ -106,9 +106,6 @@
         "adminShell": {
             "value": "/bin/bash"
         },
-        "tagsByResource": {
-            "value": {}
-        },
         "deployNewNSG": {
             "value": true
         },

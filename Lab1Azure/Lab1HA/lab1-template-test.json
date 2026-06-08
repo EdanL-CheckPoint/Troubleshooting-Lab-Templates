@@ -359,10 +359,6 @@
             "type": "securestring",
             "defaultValue": ""
         },
-        "tagsByResource": {
-            "type": "object",
-            "defaultValue": {}
-        },
         "deployNewNSG": {
             "type": "bool",
             "defaultValue": true
@@ -504,6 +500,7 @@
     "variables": {
         "VIPs_Number": "[int(parameters('VipsNumber'))]",
         "Vip_Names": "[split(parameters('VipNames'), ',')]",
+        "tagsByResource": {},
         "templateName": "ha",
         "templateVersion": "20260505",
         "location": "[parameters('location')]",
@@ -1569,7 +1566,7 @@
                 "name": "Standard",
                 "tier": "Regional"
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/publicIPPrefixes'), parameters('tagsByResource')['Microsoft.Network/publicIPPrefixes'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/publicIPPrefixes'), variables('tagsByResource')['Microsoft.Network/publicIPPrefixes'], json('{}')) ]"
         },
         {
             "apiVersion": "2020-06-01",
@@ -1604,7 +1601,7 @@
                 "name": "[variables('storageAccountType')]"
             },
             "kind": "StorageV2",
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Storage/storageAccounts'), parameters('tagsByResource')['Microsoft.Storage/storageAccounts'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Storage/storageAccounts'), variables('tagsByResource')['Microsoft.Storage/storageAccounts'], json('{}')) ]"
         },
         {
             "condition": "[equals(parameters('vnetNewOrExisting'), 'new')]",
@@ -1649,7 +1646,7 @@
                         "value": "[parameters('NewNsgName')]"
                     },
                     "tagsByResource": {
-                        "value": "[parameters('tagsByResource')]"
+                        "value": "[variables('tagsByResource')]"
                     }
                 }
             }
@@ -1685,7 +1682,7 @@
                         "value": "[parameters('NewNsgName')]"
                     },
                     "tagsByResource": {
-                        "value": "[parameters('tagsByResource')]"
+                        "value": "[variables('tagsByResource')]"
                     }
                 }
             }
@@ -1723,7 +1720,7 @@
                     }
                 ]
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/routeTables'), parameters('tagsByResource')['Microsoft.Network/routeTables'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/routeTables'), variables('tagsByResource')['Microsoft.Network/routeTables'], json('{}')) ]"
         },
         {
             "condition": "[equals(parameters('vnetNewOrExisting'), 'new')]",
@@ -1753,7 +1750,7 @@
             "sku": {
                 "name": "Aligned"
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Compute/availabilitySets'), parameters('tagsByResource')['Microsoft.Compute/availabilitySets'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Compute/availabilitySets'), variables('tagsByResource')['Microsoft.Compute/availabilitySets'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
@@ -1775,7 +1772,7 @@
                 },
                 "publicIPPrefix": "[if(equals(parameters('publicIPPrefix'), 'yes'), variables('publicIPPrefixProperty'), json('null'))]"
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/publicIPAddresses'), parameters('tagsByResource')['Microsoft.Network/publicIPAddresses'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/publicIPAddresses'), variables('tagsByResource')['Microsoft.Network/publicIPAddresses'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
@@ -1801,7 +1798,7 @@
                 },
                 "publicIPPrefix": "[if(equals(parameters('publicIPPrefix'), 'yes'), variables('publicIPPrefixProperty'), json('null'))]"
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/publicIPAddresses'), parameters('tagsByResource')['Microsoft.Network/publicIPAddresses'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/publicIPAddresses'), variables('tagsByResource')['Microsoft.Network/publicIPAddresses'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
@@ -1823,7 +1820,7 @@
                 },
                 "publicIPPrefix": "[if(equals(parameters('publicIPPrefix'), 'yes'), variables('publicIPPrefixProperty'), json('null'))]"
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/publicIPAddresses'), parameters('tagsByResource')['Microsoft.Network/publicIPAddresses'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/publicIPAddresses'), variables('tagsByResource')['Microsoft.Network/publicIPAddresses'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
@@ -1849,7 +1846,7 @@
                 },
                 "publicIPPrefix": "[if(equals(parameters('publicIPPrefix'), 'yes'), variables('publicIPPrefixProperty'), json('null'))]"
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/publicIPAddresses'), parameters('tagsByResource')['Microsoft.Network/publicIPAddresses'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/publicIPAddresses'), variables('tagsByResource')['Microsoft.Network/publicIPAddresses'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
@@ -1870,7 +1867,7 @@
                 "networkSecurityGroup": "[if(parameters('deployNewNSG'), variables('NewNsgReference'), parameters('ExistingNSG'))]",
                 "ipConfigurations": "[union(variables('DefaultIpAddresses'),variables('Vips'))]"
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/networkInterfaces'), parameters('tagsByResource')['Microsoft.Network/networkInterfaces'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/networkInterfaces'), variables('tagsByResource')['Microsoft.Network/networkInterfaces'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
@@ -1910,7 +1907,7 @@
                     }
                 ]
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/networkInterfaces'), parameters('tagsByResource')['Microsoft.Network/networkInterfaces'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/networkInterfaces'), variables('tagsByResource')['Microsoft.Network/networkInterfaces'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
@@ -1949,7 +1946,7 @@
                     }
                 ]
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/networkInterfaces'), parameters('tagsByResource')['Microsoft.Network/networkInterfaces'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/networkInterfaces'), variables('tagsByResource')['Microsoft.Network/networkInterfaces'], json('{}')) ]"
         },
         {
             "condition": "[not(equals(parameters('sourceImageVhdUri'), 'noCustomUri'))]",
@@ -1968,7 +1965,7 @@
                 },
                 "hyperVGeneration": "V1"
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Compute/images'), parameters('tagsByResource')['Microsoft.Compute/images'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Compute/images'), variables('tagsByResource')['Microsoft.Compute/images'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Compute/virtualMachines",
@@ -2035,7 +2032,7 @@
                     }
                 }
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Compute/virtualMachines'), parameters('tagsByResource')['Microsoft.Compute/virtualMachines'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Compute/virtualMachines'), variables('tagsByResource')['Microsoft.Compute/virtualMachines'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Network/loadBalancers",
@@ -2102,7 +2099,7 @@
                     }
                 ]
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/loadBalancers'), parameters('tagsByResource')['Microsoft.Network/loadBalancers'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/loadBalancers'), variables('tagsByResource')['Microsoft.Network/loadBalancers'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Network/loadBalancers",
@@ -2167,7 +2164,7 @@
                     }
                 ]
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/loadBalancers'), parameters('tagsByResource')['Microsoft.Network/loadBalancers'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/loadBalancers'), variables('tagsByResource')['Microsoft.Network/loadBalancers'], json('{}')) ]"
         }
         ,
         {
@@ -2178,7 +2175,7 @@
             "properties": {
                 "securityRules": "[parameters('webNetworkSecurityGroupRules')]"
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/networkSecurityGroups'), parameters('tagsByResource')['Microsoft.Network/networkSecurityGroups'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/networkSecurityGroups'), variables('tagsByResource')['Microsoft.Network/networkSecurityGroups'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
@@ -2206,7 +2203,7 @@
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('webVmName'), '-nsg'))]"
                 }
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/networkInterfaces'), parameters('tagsByResource')['Microsoft.Network/networkInterfaces'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Network/networkInterfaces'), variables('tagsByResource')['Microsoft.Network/networkInterfaces'], json('{}')) ]"
         },
         {
             "type": "Microsoft.Compute/virtualMachines",
@@ -2272,7 +2269,7 @@
                     }
                 }
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Compute/virtualMachines'), parameters('tagsByResource')['Microsoft.Compute/virtualMachines'], json('{}')) ]"
+            "tags": "[ if(contains(variables('tagsByResource'), 'Microsoft.Compute/virtualMachines'), variables('tagsByResource')['Microsoft.Compute/virtualMachines'], json('{}')) ]"
         }
     ],
     "outputs": {
