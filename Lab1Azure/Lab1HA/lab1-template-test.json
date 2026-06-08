@@ -424,7 +424,7 @@
         },
         "webVmSize": {
             "type": "string",
-            "defaultValue": "Standard_B2s",
+            "defaultValue": "Standard_D4ds_v5",
             "metadata": {
                 "description": "Size of the web VM"
             }
