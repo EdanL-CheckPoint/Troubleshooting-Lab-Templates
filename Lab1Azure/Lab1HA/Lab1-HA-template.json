@@ -1750,7 +1750,7 @@
                         "properties": {
                             "addressPrefix": "0.0.0.0/0",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "172.21.1.1"
+                            "nextHopIpAddress": "172.21.1.4"
                         }
                     },
                     {
@@ -1758,7 +1758,7 @@
                         "properties": {
                             "addressPrefix": "172.21.0.0/16",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "172.21.1.1"
+                            "nextHopIpAddress": "172.21.1.4"
                         }
                     },
                     {
@@ -2130,7 +2130,7 @@
                             "protocol": "Tcp",
                             "frontendPort": 80,
                             "backendPort": 8083,
-                            "enableFloatingIP": "[variables('enableFloatingIP')]"
+                            "enableFloatingIP": false
                         }
                     }
                 ],
