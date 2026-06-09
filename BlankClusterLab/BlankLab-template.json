@@ -2116,6 +2116,26 @@
                         "name": "[variables('elbBEAddressPool')]"
                     }
                 ],
+                "loadBalancingRules": [
+                    {
+                        "name": "80-to-8083",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIPConfigurations', variables('elbName'), 'LoadBalancerFrontend')]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[variables('elbBEAddressPoolID')]"
+                            },
+                            "probe": {
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/probes', variables('elbName'), variables('appProbeName'))]"
+                            },
+                            "protocol": "Tcp",
+                            "frontendPort": 80,
+                            "backendPort": 8083,
+                            "enableFloatingIP": "[variables('enableFloatingIP')]"
+                        }
+                    }
+                ],
                 "probes": [
                     {
                         "name": "[variables('appProbeName')]",
