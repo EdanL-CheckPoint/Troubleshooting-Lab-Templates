@@ -7,7 +7,7 @@
             "metadata": {
                 "description": "Deployment location"
             },
-            "defaultValue": "[resourceGroup().location]"
+            "defaultValue": "israelcentral"
         },
         "extendedZone": {
             "type": "string",
@@ -37,7 +37,7 @@
                 "R82.10 - Pay As You Go (NGTP)",
                 "R82.10 - Pay As You Go (NGTX)"
             ],
-            "defaultValue": "R82 - Bring Your Own License",
+            "defaultValue": "R82.10 - Bring Your Own License",
             "metadata": {
                 "description": "Check Point CloudGuard version"
             }
@@ -65,7 +65,7 @@
             "metadata": {
                 "description": "Administrator password"
             },
-            "defaultValue": ""
+            "defaultValue": "Checkpoint123"
         },
         "MaintenanceModePasswordHash": {
             "type": "securestring",
@@ -123,7 +123,7 @@
         },
         "vmName": {
             "type": "string",
-            "defaultValue": "[resourceGroup().name]",
+            "defaultValue": "AzureLab1Member",
             "metadata": {
                 "description": "Name of the Check Point Cluster object"
             }
@@ -137,7 +137,7 @@
         },
         "adminShell": {
             "type": "string",
-            "defaultValue": "/etc/cli.sh",
+            "defaultValue": "/bin/bash",
             "allowedValues": [
                 "/etc/cli.sh",
                 "/bin/bash",
@@ -150,6 +150,7 @@
         },
         "sicKey": {
             "type": "securestring",
+            "defaultValue": "Checkpoint123",
             "metadata": {
                 "description": "One time key for Secure Internal Communication"
             }
@@ -159,7 +160,7 @@
             "metadata": {
                 "description": "The name of the virtual network"
             },
-            "defaultValue": "[concat(resourceGroup().name, '-vnet')]"
+            "defaultValue": "vnet01-8"
         },
         "virtualNetworkAddressPrefixes": {
             "type": "array",
@@ -167,7 +168,7 @@
                 "description": "The address prefixes of the virtual network"
             },
             "defaultValue": [
-                "10.0.0.0/16"
+                "172.21.0.0/16"
             ]
         },
         "subnet1Name": {
@@ -182,14 +183,14 @@
             "metadata": {
                 "description": "The address prefix of the frontend subnet"
             },
-            "defaultValue": "10.0.1.0/24"
+            "defaultValue": "172.21.0.0/24"
         },
         "subnet1StartAddress": {
             "type": "string",
             "metadata": {
                 "description": "The first available address on the 1st subnet"
             },
-            "defaultValue": "10.0.1.10"
+            "defaultValue": "172.21.0.4"
         },
         "subnet2Name": {
             "type": "string",
@@ -203,35 +204,28 @@
             "metadata": {
                 "description": "The address prefix of the backend subnet"
             },
-            "defaultValue": "10.0.2.0/24"
+            "defaultValue": "172.21.1.0/24"
         },
         "subnet2StartAddress": {
             "type": "string",
             "metadata": {
                 "description": "The first available address on the 2nd subnet"
             },
-            "defaultValue": "10.0.2.10"
+            "defaultValue": "172.21.1.4"
         },
         "subnet3Name": {
             "type": "string",
             "metadata": {
                 "description": "The name of the web subnet"
             },
-            "defaultValue": "Web"
+            "defaultValue": "websubnet"
         },
         "subnet3Prefix": {
             "type": "string",
             "metadata": {
                 "description": "The address prefix of the web subnet"
             },
-            "defaultValue": "10.0.3.0/24"
-        },
-        "subnet3StartAddress": {
-            "type": "string",
-            "metadata": {
-                "description": "The first available address on the web subnet"
-            },
-            "defaultValue": "10.0.3.10"
+            "defaultValue": "172.21.2.0/24"
         },
         "vnetNewOrExisting": {
             "type": "string",
@@ -249,14 +243,14 @@
             "metadata": {
                 "description": "Resource Group of the existing virtual network"
             },
-            "defaultValue": "[resourceGroup().name]"
+            "defaultValue": "Azurelab1"
         },
         "bootstrapScript": {
             "type": "string",
             "metadata": {
                 "description": "Bootstrap script"
             },
-            "defaultValue": ""
+            "defaultValue": "sed -i 's/cloud_balancer_ip1=0xa83f8110//g' /var/opt/fw.boot/modules/fwkern.conf"
         },
         "allowDownloadFromUploadToCheckPoint": {
             "type": "string",
@@ -372,7 +366,7 @@
         },
         "NewNsgName": {
             "type": "string",
-            "defaultValue": "[concat(parameters('vmName'),'-nsg')]"
+            "defaultValue": "AzureLab1Member-nsg"
         },
         "VipsNumber": {
             "type": "int",
@@ -382,7 +376,7 @@
         },
         "VipNames": {
             "type": "string",
-            "defaultValue": ""
+            "defaultValue": ",,,,,,,,"
         },
         "storageAccountDeployMode": {
             "type": "string",
@@ -418,62 +412,30 @@
             },
             "defaultValue": ""
         },
-        "webVmName": {
+        "networkInterfaceName1": {
             "type": "string",
-            "defaultValue": "web-vm",
-            "metadata": {
-                "description": "Name of the Apache web VM deployed in the Web subnet"
-            }
+            "defaultValue": "azurelabwebserver272_z1"
         },
-        "webVmSize": {
+        "enableAcceleratedNetworking": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "networkSecurityGroupName": {
             "type": "string",
-            "defaultValue": "Standard_B2s",
-            "metadata": {
-                "description": "Size of the web VM"
-            }
+            "defaultValue": "Azurelabwebserver-nsg"
         },
-        "webAdminUsername": {
-            "type": "string",
-            "defaultValue": "azureuser",
-            "metadata": {
-                "description": "Admin username for the web VM"
-            }
-        },
-        "webAdminPassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Admin password for the web VM"
-            }
-        },
-        "webOsDiskType": {
-            "type": "string",
-            "defaultValue": "Standard_LRS",
-            "allowedValues": [
-                "Standard_LRS",
-                "Premium_LRS",
-                "StandardSSD_LRS"
-            ],
-            "metadata": {
-                "description": "OS disk type for the web VM"
-            }
-        },
-        "webVmZone": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Availability zone for the web VM. Leave empty for no zone."
-            }
-        },
-        "webNetworkSecurityGroupRules": {
+        "networkSecurityGroupRules": {
             "type": "array",
             "defaultValue": [
                 {
-                    "name": "AllowHTTP",
+                    "name": "http",
                     "properties": {
-                        "priority": 1000,
-                        "protocol": "Tcp",
+                        "priority": 1010,
+                        "protocol": "TCP",
                         "access": "Allow",
                         "direction": "Inbound",
+                        "sourceApplicationSecurityGroups": [],
+                        "destinationApplicationSecurityGroups": [],
                         "sourceAddressPrefix": "*",
                         "sourcePortRange": "*",
                         "destinationAddressPrefix": "*",
@@ -481,22 +443,108 @@
                     }
                 },
                 {
-                    "name": "AllowSSH",
+                    "name": "https",
                     "properties": {
-                        "priority": 1010,
-                        "protocol": "Tcp",
+                        "priority": 1020,
+                        "protocol": "TCP",
                         "access": "Allow",
                         "direction": "Inbound",
+                        "sourceApplicationSecurityGroups": [],
+                        "destinationApplicationSecurityGroups": [],
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "443"
+                    }
+                },
+                {
+                    "name": "default-allow-ssh",
+                    "properties": {
+                        "priority": 1030,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceApplicationSecurityGroups": [],
+                        "destinationApplicationSecurityGroups": [],
                         "sourceAddressPrefix": "*",
                         "sourcePortRange": "*",
                         "destinationAddressPrefix": "*",
                         "destinationPortRange": "22"
                     }
                 }
-            ],
-            "metadata": {
-                "description": "NSG rules for the web VM"
-            }
+            ]
+        },
+        "subnetName": {
+            "type": "string",
+            "defaultValue": "Web"
+        },
+        "virtualNetworkId": {
+            "type": "string",
+            "defaultValue": "/subscriptions/01844d66-0506-457d-896a-7261af5fbb20/resourceGroups/lab2ha/providers/Microsoft.Network/virtualNetworks/vnet01-6"
+        },
+        "publicIpAddressName1": {
+            "type": "string",
+            "defaultValue": "Azurelabwebserver-ip"
+        },
+        "publicIpAddressType": {
+            "type": "string",
+            "defaultValue": "Static"
+        },
+        "publicIpAddressSku": {
+            "type": "string",
+            "defaultValue": "Standard"
+        },
+        "pipDeleteOption": {
+            "type": "string",
+            "defaultValue": "Delete"
+        },
+        "virtualMachineName": {
+            "type": "string",
+            "defaultValue": "Azurelabwebserver"
+        },
+        "virtualMachineName1": {
+            "type": "string",
+            "defaultValue": "Azurelabwebserver"
+        },
+        "virtualMachineComputerName1": {
+            "type": "string",
+            "defaultValue": "Azurelabwebserver"
+        },
+        "virtualMachineRG": {
+            "type": "string",
+            "defaultValue": "testapache"
+        },
+        "osDiskType": {
+            "type": "string",
+            "defaultValue": "StandardSSD_LRS"
+        },
+        "osDiskDeleteOption": {
+            "type": "string",
+            "defaultValue": "Delete"
+        },
+        "virtualMachineSize": {
+            "type": "string",
+            "defaultValue": "Standard_D4s_v3"
+        },
+        "nicDeleteOption": {
+            "type": "string",
+            "defaultValue": "Delete"
+        },
+        "hibernationEnabled": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "cpuser"
+        },
+        "enablePeriodicAssessment": {
+            "type": "string",
+            "defaultValue": "ImageDefault"
+        },
+        "virtualMachine1Zone": {
+            "type": "string",
+            "defaultValue": "1"
         }
     },
     "variables": {
@@ -1550,7 +1598,11 @@
                 "publicIPAddress": "[parameters('vmName')]"
             }
         ],
-        "VipsInformationForCloudConfig": "[union(variables('DefaultVipInformation'), variables('VipsInformation'))]"
+        "VipsInformationForCloudConfig": "[union(variables('DefaultVipInformation'), variables('VipsInformation'))]",
+        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]",
+        "vnetId": "[parameters('virtualNetworkId')]",
+        "vnetName": "[last(split(variables('vnetId'), '/'))]",
+        "subnetRef": "[resourceId(variables('vnetRGName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnet3Name'))]"
     },
     "resources": [
         {
@@ -1689,34 +1741,33 @@
             }
         },
         {
-            "condition": "[equals(parameters('vnetNewOrExisting'), 'new')]",
             "type": "Microsoft.Network/routeTables",
             "apiVersion": "2020-06-01",
-            "name": "web-route",
+            "name": "web-rt",
             "location": "[variables('location')]",
             "properties": {
                 "routes": [
                     {
-                        "name": "Default-route",
+                        "name": "default",
                         "properties": {
                             "addressPrefix": "0.0.0.0/0",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "172.20.1.4"
+                            "nextHopIpAddress": "172.21.1.4"
                         }
                     },
                     {
-                        "name": "Subnet-Route",
+                        "name": "vnetroute",
                         "properties": {
-                            "addressPrefix": "172.2.2.0/24",
-                            "nextHopType": "VnetLocal"
-                        }
-                    },
-                    {
-                        "name": "vnet-route",
-                        "properties": {
-                            "addressPrefix": "172.2.0.0/16",
+                            "addressPrefix": "172.21.0.0/16",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "172.20.1.4"
+                            "nextHopIpAddress": "172.21.1.4"
+                        }
+                    },
+                    {
+                        "name": "intersubnet",
+                        "properties": {
+                            "addressPrefix": "172.21.2.0/24",
+                            "nextHopType": "VnetLocal"
                         }
                     }
                 ]
@@ -1724,18 +1775,17 @@
             "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/routeTables'), parameters('tagsByResource')['Microsoft.Network/routeTables'], json('{}')) ]"
         },
         {
-            "condition": "[equals(parameters('vnetNewOrExisting'), 'new')]",
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2020-06-01",
             "name": "[concat(parameters('virtualNetworkName'), '/', parameters('subnet3Name'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'networkNewSetup')]",
-                "[resourceId('Microsoft.Network/routeTables', 'web-route')]"
+                "[coalesce(resourceId('Microsoft.Resources/deployments', 'networkNewSetup'), resourceId('Microsoft.Resources/deployments', 'networkExistingSetup'))]",
+                "[resourceId('Microsoft.Network/routeTables', 'web-rt')]"
             ],
             "properties": {
                 "addressPrefix": "[parameters('subnet3Prefix')]",
                 "routeTable": {
-                    "id": "[resourceId('Microsoft.Network/routeTables', 'web-route')]"
+                    "id": "[resourceId('Microsoft.Network/routeTables', 'web-rt')]"
                 }
             }
         },
@@ -2068,7 +2118,7 @@
                 ],
                 "loadBalancingRules": [
                     {
-                        "name": "80-to8083",
+                        "name": "80-to-8083",
                         "properties": {
                             "frontendIPConfiguration": {
                                 "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIPConfigurations', variables('elbName'), 'LoadBalancerFrontend')]"
@@ -2082,9 +2132,7 @@
                             "protocol": "Tcp",
                             "frontendPort": 80,
                             "backendPort": 8083,
-                            "enableFloatingIP": false,
-                            "idleTimeoutInMinutes": 4,
-                            "loadDistribution": "Default"
+                            "enableFloatingIP": false
                         }
                     }
                 ],
@@ -2227,26 +2275,15 @@
                 ]
             },
             "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/loadBalancers'), parameters('tagsByResource')['Microsoft.Network/loadBalancers'], json('{}')) ]"
-        }
-        ,
-        {
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('webVmName'), '-nsg')]",
-            "location": "[variables('location')]",
-            "properties": {
-                "securityRules": "[parameters('webNetworkSecurityGroupRules')]"
-            },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/networkSecurityGroups'), parameters('tagsByResource')['Microsoft.Network/networkSecurityGroups'], json('{}')) ]"
         },
         {
+            "name": "[parameters('networkInterfaceName1')]",
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2022-11-01",
-            "name": "[concat(parameters('webVmName'), '-nic')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('webVmName'), '-nsg'))]",
-                "[if(equals(parameters('vnetNewOrExisting'), 'new'), resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnet3Name')), resourceId('Microsoft.Resources/deployments', 'networkExistingSetup'))]"
+                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnet3Name'))]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -2254,44 +2291,46 @@
                         "name": "ipconfig1",
                         "properties": {
                             "subnet": {
-                                "id": "[resourceId(variables('vnetRGName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnet3Name'))]"
+                                "id": "[variables('subnetRef')]"
                             },
                             "privateIPAllocationMethod": "Dynamic"
                         }
                     }
                 ],
-                "enableAcceleratedNetworking": false,
+                "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]",
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('webVmName'), '-nsg'))]"
+                    "id": "[variables('nsgId')]"
                 }
-            },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Network/networkInterfaces'), parameters('tagsByResource')['Microsoft.Network/networkInterfaces'], json('{}')) ]"
+            }
         },
         {
+            "name": "[parameters('networkSecurityGroupName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-05-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": "[parameters('networkSecurityGroupRules')]"
+            }
+        },
+        {
+            "name": "[parameters('virtualMachineName1')]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2024-11-01",
-            "name": "[parameters('webVmName')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('webVmName'), '-nic'))]"
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName1'))]"
             ],
-            "zones": "[if(empty(parameters('webVmZone')), json('null'), array(parameters('webVmZone')))]",
-            "plan": {
-                "name": "apache-ubuntu-24-04",
-                "publisher": "cloud-infrastructure-services",
-                "product": "apache_ubuntu20-04"
-            },
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "[parameters('webVmSize')]"
+                    "vmSize": "[parameters('virtualMachineSize')]"
                 },
                 "storageProfile": {
                     "osDisk": {
                         "createOption": "fromImage",
                         "managedDisk": {
-                            "storageAccountType": "[parameters('webOsDiskType')]"
+                            "storageAccountType": "[parameters('osDiskType')]"
                         },
-                        "deleteOption": "Delete"
+                        "deleteOption": "[parameters('osDiskDeleteOption')]"
                     },
                     "imageReference": {
                         "publisher": "cloud-infrastructure-services",
@@ -2303,9 +2342,9 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('webVmName'), '-nic'))]",
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName1'))]",
                             "properties": {
-                                "deleteOption": "Detach"
+                                "deleteOption": "[parameters('nicDeleteOption')]"
                             }
                         }
                     ]
@@ -2315,12 +2354,12 @@
                     "hibernationEnabled": false
                 },
                 "osProfile": {
-                    "computerName": "[parameters('webVmName')]",
-                    "adminUsername": "[parameters('webAdminUsername')]",
-                    "adminPassword": "[parameters('webAdminPassword')]",
+                    "computerName": "[parameters('virtualMachineComputerName1')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
                     "linuxConfiguration": {
                         "patchSettings": {
-                            "assessmentMode": "ImageDefault",
+                            "assessmentMode": "[parameters('enablePeriodicAssessment')]",
                             "patchMode": "ImageDefault"
                         }
                     }
@@ -2331,14 +2370,17 @@
                     }
                 }
             },
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Compute/virtualMachines'), parameters('tagsByResource')['Microsoft.Compute/virtualMachines'], json('{}')) ]"
+            "plan": {
+                "name": "apache-ubuntu-24-04",
+                "publisher": "cloud-infrastructure-services",
+                "product": "apache_ubuntu20-04"
+            },
+            "zones": [
+                "[parameters('virtualMachine1Zone')]"
+            ]
         }
     ],
     "outputs": {
-        "webAdminUsername": {
-            "type": "string",
-            "value": "[parameters('webAdminUsername')]"
-        },
         "HaIPAddr": {
             "type": "string",
             "value": "[reference(variables('haPublicIPId')).IpAddress]"
@@ -2362,6 +2404,10 @@
         "Member2FQDN": {
             "type": "string",
             "value": "[reference(variables('gwPublicIPIds')[1]).dnsSettings.fqdn]"
+        },
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
         }
     }
 }

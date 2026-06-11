@@ -18,7 +18,7 @@
             "value": "password"
         },
         "vmName": {
-            "value": "Lab2HA"
+            "value": "AzureLab1Member"
         },
         "vmSize": {
             "value": "Standard_D4ds_v5"
@@ -27,48 +27,39 @@
             "value": "Checkpoint123"
         },
         "virtualNetworkName": {
-            "value": "vnet01-6"
+            "value": "vnet01-8"
         },
         "virtualNetworkAddressPrefixes": {
             "value": [
-                "172.20.0.0/16"
+                "172.21.0.0/16"
             ]
         },
         "subnet1Name": {
             "value": "Frontend"
         },
         "subnet1Prefix": {
-            "value": "172.20.0.0/24"
+            "value": "172.21.0.0/24"
         },
         "subnet1StartAddress": {
-            "value": "172.20.0.4"
+            "value": "172.21.0.4"
         },
         "subnet2Name": {
             "value": "Backend"
         },
         "subnet2Prefix": {
-            "value": "172.20.1.0/24"
+            "value": "172.21.1.0/24"
         },
         "subnet2StartAddress": {
-            "value": "172.20.1.4"
-        },
-        "subnet3Name": {
-            "value": "Web"
-        },
-        "subnet3Prefix": {
-            "value": "172.20.2.0/24"
-        },
-        "subnet3StartAddress": {
-            "value": "172.20.2.4"
+            "value": "172.21.1.4"
         },
         "vnetNewOrExisting": {
             "value": "new"
         },
         "virtualNetworkExistingRGName": {
-            "value": "testha1"
+            "value": "Azurelab1"
         },
         "bootstrapScript": {
-            "value": "sed -i 's/cloud_balancer_ip1=0xa83f8110//g' /var/opt/fw.boot/modules/fwkern.conf"
+            "value": ""
         },
         "allowDownloadFromUploadToCheckPoint": {
             "value": "true"
@@ -116,7 +107,7 @@
             "value": true
         },
         "NewNsgName": {
-            "value": "Lab2HA-nsg"
+            "value": "AzureLab1Member-nsg"
         },
         "storageAccountDeployMode": {
             "value": "New"
@@ -133,25 +124,16 @@
         "MaintenanceModePasswordHash": {
             "value": null
         },
-        "webVmName": {
-            "value": "Web-server"
+        "networkInterfaceName1": {
+            "value": "azurelabwebserver272_z1"
         },
-        "webVmSize": {
-            "value": "Standard_D4s_v3"
+        "enableAcceleratedNetworking": {
+            "value": true
         },
-        "webAdminUsername": {
-            "value": "cpuser"
+        "networkSecurityGroupName": {
+            "value": "Azurelabwebserver-nsg"
         },
-        "webAdminPassword": {
-            "value": "Checkpoint123"
-        },
-        "webOsDiskType": {
-            "value": "StandardSSD_LRS"
-        },
-        "webVmZone": {
-            "value": "1"
-        },
-        "webNetworkSecurityGroupRules": {
+        "networkSecurityGroupRules": {
             "value": [
                 {
                     "name": "http",
@@ -199,6 +181,60 @@
                     }
                 }
             ]
+        },
+        "subnetName": {
+            "value": "Web"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/01844d66-0506-457d-896a-7261af5fbb20/resourceGroups/lab2ha/providers/Microsoft.Network/virtualNetworks/vnet01-6"
+        },
+        "publicIpAddressName1": {
+            "value": "Azurelabwebserver-ip"
+        },
+        "publicIpAddressType": {
+            "value": "Static"
+        },
+        "publicIpAddressSku": {
+            "value": "Standard"
+        },
+        "pipDeleteOption": {
+            "value": "Delete"
+        },
+        "virtualMachineName": {
+            "value": "Azurelabwebserver"
+        },
+        "virtualMachineName1": {
+            "value": "Azurelabwebserver"
+        },
+        "virtualMachineComputerName1": {
+            "value": "Azurelabwebserver"
+        },
+        "virtualMachineRG": {
+            "value": "testapache"
+        },
+        "osDiskType": {
+            "value": "StandardSSD_LRS"
+        },
+        "osDiskDeleteOption": {
+            "value": "Delete"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_D4s_v3"
+        },
+        "nicDeleteOption": {
+            "value": "Delete"
+        },
+        "hibernationEnabled": {
+            "value": false
+        },
+        "adminUsername": {
+            "value": "cpuser"
+        },
+        "enablePeriodicAssessment": {
+            "value": "ImageDefault"
+        },
+        "virtualMachine1Zone": {
+            "value": "1"
         }
     }
 }
