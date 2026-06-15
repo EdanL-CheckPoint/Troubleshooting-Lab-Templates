@@ -18,7 +18,7 @@
             "value": "password"
         },
         "vmName": {
-            "value": "AzureLab1Member"
+            "value": "AzureLab2Member"
         },
         "vmSize": {
             "value": "Standard_D4ds_v5"
@@ -56,7 +56,7 @@
             "value": "new"
         },
         "virtualNetworkExistingRGName": {
-            "value": "Azurelab1"
+            "value": "Azurelab2"
         },
         "bootstrapScript": {
             "value": ""
@@ -107,7 +107,7 @@
             "value": true
         },
         "NewNsgName": {
-            "value": "AzureLab1Member-nsg"
+            "value": "AzureLab2Member-nsg"
         },
         "storageAccountDeployMode": {
             "value": "New"
