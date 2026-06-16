@@ -1799,6 +1799,24 @@
                 ],
                 "loadBalancingRules": [
                     {
+                        "name": "80-to-8083",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIPConfigurations', variables('elbNameV4'), variables('appFENameV4'))]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', variables('elbNameV4'), variables('elbBEAddressPoolNameV4'))]"
+                            },
+                            "probe": {
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/probes', variables('elbNameV4'), variables('appProbeNameV4'))]"
+                            },
+                            "protocol": "Tcp",
+                            "frontendPort": 80,
+                            "backendPort": 8083,
+                            "enableFloatingIP": false
+                        }
+                    },
+                    {
                         "name": "[variables('appProbeNameV4')]",
                         "properties": {
                             "frontendIPConfiguration": {
