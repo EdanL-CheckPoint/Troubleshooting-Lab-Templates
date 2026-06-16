@@ -123,7 +123,7 @@
         },
         "vmName": {
             "type": "string",
-            "defaultValue": "AzureLab1Member",
+            "defaultValue": "AzureLab2Member",
             "metadata": {
                 "description": "Name of the Check Point Cluster object"
             }
@@ -243,7 +243,7 @@
             "metadata": {
                 "description": "Resource Group of the existing virtual network"
             },
-            "defaultValue": "Azurelab1"
+            "defaultValue": "Azurelab2"
         },
         "bootstrapScript": {
             "type": "string",
@@ -366,7 +366,7 @@
         },
         "NewNsgName": {
             "type": "string",
-            "defaultValue": "AzureLab1Member-nsg"
+            "defaultValue": "AzureLab2Member-nsg"
         },
         "VipsNumber": {
             "type": "int",
