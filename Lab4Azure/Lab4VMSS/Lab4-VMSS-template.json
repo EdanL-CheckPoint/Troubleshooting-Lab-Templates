@@ -95,7 +95,7 @@
             "metadata": {
                 "description": "Administrator password"
             },
-            "defaultValue": ""
+            "defaultValue": "Checkpoint123"
         },
         "MaintenanceModePasswordHash": {
             "type": "securestring",
