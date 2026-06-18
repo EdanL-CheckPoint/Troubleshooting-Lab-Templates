@@ -1,0 +1,155 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "israelcentral"
+        },
+        "authenticationType": {
+            "value": "password"
+        },
+        "adminPassword": {
+            "value": "Checkpoint123"
+        },
+        "upgrading": {
+            "value": "no"
+        },
+        "vmName": {
+            "value": "AzureLabInstance"
+        },
+        "instanceCount": {
+            "value": "2"
+        },
+        "maxInstanceCount": {
+            "value": "4"
+        },
+        "managementServer": {
+            "value": "Lab-mgmt"
+        },
+        "configurationTemplate": {
+            "value": "Lab-tn"
+        },
+        "adminEmail": {
+            "value": ""
+        },
+        "deploymentMode": {
+            "value": "Standard"
+        },
+        "instanceLevelPublicIPv4": {
+            "value": "yes"
+        },
+        "mgmtInterfaceOpt1": {
+            "value": "eth0-public"
+        },
+        "appLoadDistribution": {
+            "value": "Default"
+        },
+        "ilbLoadDistribution": {
+            "value": "Default"
+        },
+        "customMetrics": {
+            "value": "yes"
+        },
+        "cloudGuardVersion": {
+            "value": "R82.10 - Bring Your Own License"
+        },
+        "vmSize": {
+            "value": "Standard_D4ds_v5"
+        },
+        "sicKey": {
+            "value": "Checkpoint123"
+        },
+        "bootstrapScript": {
+            "value": ""
+        },
+        "allowDownloadFromUploadToCheckPoint": {
+            "value": "true"
+        },
+        "additionalDiskSizeGB": {
+            "value": 0
+        },
+        "diskType": {
+            "value": "Standard_LRS"
+        },
+        "sourceImageVhdUri": {
+            "value": "noCustomUri"
+        },
+        "virtualNetworkName": {
+            "value": "vnet01-5"
+        },
+        "virtualNetworkAddressPrefixes": {
+            "value": [
+                "172.21.0.0/16"
+            ]
+        },
+        "vnetNewOrExisting": {
+            "value": "new"
+        },
+        "virtualNetworkExistingRGName": {
+            "value": "AzureLab4"
+        },
+        "subnet1Name": {
+            "value": "VMSS-Frontend"
+        },
+        "subnet1Prefix": {
+            "value": "172.21.0.0/24"
+        },
+        "subnet2Name": {
+            "value": "VMSS-Backend"
+        },
+        "subnet2Prefix": {
+            "value": "172.21.1.0/24"
+        },
+        "subnet2StartAddress": {
+            "value": "172.21.1.4"
+        },
+        "enableIpv6": {
+            "value": false
+        },
+        "virtualNetworkAddressPrefixV6": {
+            "value": ""
+        },
+        "subnet1PrefixV6": {
+            "value": ""
+        },
+        "subnet2PrefixV6": {
+            "value": ""
+        },
+        "ilbFrontendIPv6Address": {
+            "value": ""
+        },
+        "floatingIP": {
+            "value": "yes"
+        },
+        "publicIPPrefix": {
+            "value": "no"
+        },
+        "adminShell": {
+            "value": "/bin/bash"
+        },
+        "tagsByResource": {
+            "value": {}
+        },
+        "deployNewNSG": {
+            "value": true
+        },
+        "NewNsgName": {
+            "value": "AzureLabInstance-nsg"
+        },
+        "storageAccountDeployMode": {
+            "value": "New"
+        },
+        "addStorageAccountIpRules": {
+            "value": false
+        },
+        "MaintenanceModePasswordHash": {
+            "value": null
+        },
+        "availabilityZones": {
+            "value": []
+        },
+        "availabilityZonesChoice": {
+            "value": "No"
+        }
+    }
+}
