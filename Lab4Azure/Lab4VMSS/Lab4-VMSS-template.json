@@ -14,7 +14,7 @@
             "metadata": {
                 "description": "Deployment location"
             },
-            "defaultValue": "[resourceGroup().location]"
+            "defaultValue": "israelcentral"
         },
         "cloudGuardVersion": {
             "type": "string",
