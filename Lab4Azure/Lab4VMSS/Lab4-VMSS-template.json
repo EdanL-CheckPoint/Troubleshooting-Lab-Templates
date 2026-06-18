@@ -140,6 +140,7 @@
         },
         "sicKey": {
             "type": "securestring",
+            "defaultValue": "Checkpoint123",
             "metadata": {
                 "description": "One time key for Secure Internal Communication"
             }
