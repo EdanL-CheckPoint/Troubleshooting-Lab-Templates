@@ -16,6 +16,3 @@ mgmt_cli add nat-rule package "Standard" position "top" original-source "Any" or
 
 #Publish
 mgmt_cli publish -s id.txt
-
-#Push policy
-mgmt_cli install-policy policy-package "Standard" targets "AzureLab1" -s id.txt --format json
