@@ -32,7 +32,7 @@
                 "R82.10 - Pay As You Go (NGTP)",
                 "R82.10 - Pay As You Go (NGTX)"
             ],
-            "defaultValue": "R82 - Bring Your Own License",
+            "defaultValue": "R82.10 - Bring Your Own License",
             "metadata": {
                 "description": "Version of Check Point CloudGuard"
             }
@@ -45,7 +45,7 @@
             }
         },
         "maxInstanceCount": {
-            "defaultValue": "10",
+            "defaultValue": "4",
             "type": "string",
             "metadata": {
                 "description": "Maximum number of VM instances"
@@ -53,12 +53,14 @@
         },
         "managementServer": {
             "type": "string",
+            "defaultValue": "Lab-mgmt",
             "metadata": {
                 "description": "The name of the management server as it appears in the configuration file"
             }
         },
         "configurationTemplate": {
             "type": "string",
+            "defaultValue": "Lab-tn",
             "metadata": {
                 "description": "A name of a template as it appears in the configuration file"
             }
@@ -111,6 +113,7 @@
         },
         "vmName": {
             "type": "string",
+            "defaultValue": "AzureLabInstance",
             "metadata": {
                 "description": "Name of the Check Point Security Gateway scale set"
             }
@@ -124,7 +127,7 @@
         },
         "adminShell": {
             "type": "string",
-            "defaultValue": "/etc/cli.sh",
+            "defaultValue": "/bin/bash",
             "allowedValues": [
                 "/etc/cli.sh",
                 "/bin/bash",
@@ -146,7 +149,7 @@
             "metadata": {
                 "description": "The name of the virtual network"
             },
-            "defaultValue": "[concat(resourceGroup().name, '-vnet')]"
+            "defaultValue": "vnet01-5"
         },
         "upgrading": {
             "type": "string",
@@ -176,7 +179,7 @@
                 "no",
                 "yes"
             ],
-            "defaultValue": "no",
+            "defaultValue": "yes",
             "metadata": {
                 "description": "Deploy the VMSS with instance level Public IP address"
             }
@@ -264,7 +267,7 @@
                 "description": "The address prefixes of the virtual network"
             },
             "defaultValue": [
-                "10.0.0.0/16"
+                "172.21.0.0/16"
             ]
         },
         "subnet1Name": {
@@ -272,35 +275,35 @@
             "metadata": {
                 "description": "The name of the frontend subnet"
             },
-            "defaultValue": "Frontend"
+            "defaultValue": "VMSS-Frontend"
         },
         "subnet1Prefix": {
             "type": "string",
             "metadata": {
                 "description": "The address prefix of the frontend subnet"
             },
-            "defaultValue": "10.0.1.0/24"
+            "defaultValue": "172.21.0.0/24"
         },
         "subnet2Name": {
             "type": "string",
             "metadata": {
                 "description": "The name of the backend subnet"
             },
-            "defaultValue": "Backend"
+            "defaultValue": "VMSS-Backend"
         },
         "subnet2Prefix": {
             "type": "string",
             "metadata": {
                 "description": "The address prefix of the backend subnet"
             },
-            "defaultValue": "10.0.2.0/24"
+            "defaultValue": "172.21.1.0/24"
         },
         "subnet2StartAddress": {
             "type": "string",
             "metadata": {
                 "description": "The first available address on the 2nd subnet"
             },
-            "defaultValue": "10.0.2.4"
+            "defaultValue": "172.21.1.4"
         },
         "enableIpv6": {
             "type": "bool",
@@ -353,7 +356,7 @@
             "metadata": {
                 "description": "Resource Group of the existing virtual network"
             },
-            "defaultValue": "[resourceGroup().name]"
+            "defaultValue": "AzureLab4"
         },
         "bootstrapScript": {
             "type": "string",
@@ -380,7 +383,7 @@
                 "eth0-private",
                 "eth1-private"
             ],
-            "defaultValue": "eth1-private",
+            "defaultValue": "eth0-public",
             "metadata": {
                 "description": "Manage the Gateways in the Scale Set via the instance's external (eth0) or internal (eth1) NIC's private IP address."
             }
