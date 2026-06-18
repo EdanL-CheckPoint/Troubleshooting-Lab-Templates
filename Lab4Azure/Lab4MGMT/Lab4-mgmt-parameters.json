@@ -1,0 +1,116 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "availabilityZones": {
+            "value": []
+        },
+        "availabilityZonesChoice": {
+            "value": "No"
+        },
+        "location": {
+            "value": "israelcentral"
+        },
+        "cloudGuardVersion": {
+            "value": "R82.10 - Bring Your Own License"
+        },
+        "adminPassword": {
+            "value": "Checkpoint123"
+            
+        },
+        "authenticationType": {
+            "value": "password"
+        },
+        "vmName": {
+            "value": "Lab1MGMT"
+        },
+        "vmSize": {
+            "value": "Standard_D4d_v5"
+        },
+        "virtualNetworkName": {
+            "value": "vnet01-5"
+        },
+        "virtualNetworkAddressPrefix": {
+            "value": "172.16.48.0/20"
+        },
+        "Subnet1Name": {
+            "value": "Management"
+        },
+        "Subnet1Prefix": {
+            "value": "172.16.48.0/24"
+        },
+        "Subnet1StartAddress": {
+            "value": "172.16.48.4"
+        },
+        "vnetNewOrExisting": {
+            "value": "new"
+        },
+        "virtualNetworkExistingRGName": {
+            "value": "Lab1MGMT"
+        },
+        "managementGUIClientNetwork": {
+            "value": "0.0.0.0/0"
+        },
+        "enableIpv6": {
+            "value": false
+        },
+        "virtualNetworkIpv6AddressPrefix": {
+            "value": ""
+        },
+        "Subnet1Ipv6Prefix": {
+            "value": ""
+        },
+        "Subnet1Ipv6StartAddress": {
+            "value": ""
+        },
+        "managementGUIClientNetworkIpv6": {
+            "value": ""
+        },
+        "installationType": {
+            "value": "management"
+        },
+        "bootstrapScript": {
+            "value": "touch /var/log/automgmt.sh; curl_cli -k -s \"https://raw.githubusercontent.com/EdanL-CheckPoint/Troubleshooting-Lab-Templates/refs/heads/main/AutoMGMT/Auto-MGMT-script.sh\" -o \"/var/log/automgmt.sh\"; chmod 777 /var/log/automgmt.sh"
+        },
+        "allowDownloadFromUploadToCheckPoint": {
+            "value": "true"
+        },
+        "additionalDiskSizeGB": {
+            "value": 0
+        },
+        "msi": {
+            "value": true
+        },
+        "diskType": {
+            "value": "Standard_LRS"
+        },
+        "sourceImageVhdUri": {
+            "value": "noCustomUri"
+        },
+        "enableApi": {
+            "value": "management_only"
+        },
+        "adminShell": {
+            "value": "/bin/bash"
+        },
+        "tagsByResource": {
+            "value": {}
+        },
+        "deployNewNSG": {
+            "value": true
+        },
+        "NewNsgName": {
+            "value": "Lab1MGMT-nsg"
+        },
+        "storageAccountDeployMode": {
+            "value": "New"
+        },
+        "addStorageAccountIpRules": {
+            "value": false
+        },
+        "MaintenanceModePasswordHash": {
+            "value": null
+        }
+        
+    }
+}
