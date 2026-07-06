@@ -121,7 +121,7 @@
   },
   {
     "ParameterKey": "KeyName",
-    "ParameterValue": "AWS-Lab-Key"
+    "ParameterValue": "checkpoint-key"
   },
   {
     "ParameterKey": "PublicSubnet2CIDR",

@@ -1164,17 +1164,21 @@
   },
   "Rules": {
     "GatewayAddressAllocationRule": {
-      "RuleCondition": [
-        "ControlGatewayOverPrivateOrPublicAddress",
-        "public"
-      ],
+      "RuleCondition": {
+        "Fn::Equals": [
+          { "Ref": "ControlGatewayOverPrivateOrPublicAddress" },
+          "public"
+        ]
+      },
       "Assertions": [
         {
           "AssertDescription": "Gateway's selected to be provisioned by public IP, but ['AllocatePublicAddress'] parameter is false",
-          "Assert": [
-            "AllocatePublicAddress",
-            "true"
-          ]
+          "Assert": {
+            "Fn::Equals": [
+              { "Ref": "AllocatePublicAddress" },
+              "true"
+            ]
+          }
         }
       ]
     }
