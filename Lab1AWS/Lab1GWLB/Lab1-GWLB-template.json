@@ -670,6 +670,7 @@
     "GatewaySICKey": {
       "Description": "The Secure Internal Communication key creates trusted connections between Check Point components. Choose a random string consisting of at least 8 alphanumeric characters.",
       "Type": "String",
+      "Default": "Checkpoint123",
       "AllowedPattern": "^[a-zA-Z0-9]{8,}$",
       "ConstraintDescription": "Secure Internal Communication activation key should contain only alpha numeric characters and be at least 8 characters long.",
       "NoEcho": true
