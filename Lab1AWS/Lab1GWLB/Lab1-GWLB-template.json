@@ -1067,7 +1067,7 @@
         },
         "Parameters": {
           "AvailabilityZones": {
-            "Fn::Split": [
+            "Fn::Join": [
               ",",
               { "Ref": "AvailabilityZones" }
             ]
