@@ -167,7 +167,7 @@
           "default": "Gateways Maintenance Password hash"
         },
         "GatewaySICKey": {
-          "default": "Gateways SIC key"
+          "default": "Checkpoint123"
         },
         "ControlGatewayOverPrivateOrPublicAddress": {
           "default": "Gateways addresses"

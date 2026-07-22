@@ -113,7 +113,7 @@
   },
   {
     "ParameterKey": "GatewaySICKey",
-    "ParameterValue": "****"
+    "ParameterValue": "Checkpoint123"
   },
   {
     "ParameterKey": "ManagementServer",
