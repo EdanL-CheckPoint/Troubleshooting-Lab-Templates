@@ -1014,52 +1014,70 @@
     }
   },
   "Conditions": {
-    "4AZs": [
-      "NumberOfAZs",
-      4
-    ],
-    "3AZs": [
-      [
-        "NumberOfAZs",
-        3
-      ],
-      "4AZs"
-    ],
-    "DeployManagement": [
-      "ManagementDeploy",
-      true
-    ],
-    "GenerateAutoScalingName": [
-      "AutoScaleGroupName",
-      ""
-    ],
-    "IsIPv6Enabled": [
-      [
-        "IPMode",
-        "IPv4"
+    "4AZs": {
+      "Fn::Equals": [
+        { "Ref": "NumberOfAZs" },
+        4
       ]
-    ]
+    },
+    "3AZs": {
+      "Fn::Or": [
+        {
+          "Fn::Equals": [
+            { "Ref": "NumberOfAZs" },
+            3
+          ]
+        },
+        { "Condition": "4AZs" }
+      ]
+    },
+    "DeployManagement": {
+      "Fn::Equals": [
+        { "Ref": "ManagementDeploy" },
+        "true"
+      ]
+    },
+    "GenerateAutoScalingName": {
+      "Fn::Equals": [
+        { "Ref": "AutoScaleGroupName" },
+        ""
+      ]
+    },
+    "IsIPv6Enabled": {
+      "Fn::Not": [
+        {
+          "Fn::Equals": [
+            { "Ref": "IPMode" },
+            "IPv4"
+          ]
+        }
+      ]
+    }
   },
   "Resources": {
     "VPCStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": [
-          "IsIPv6Enabled",
-          "https://cgi-cfts.s3.amazonaws.com/utils/vpc-ipv6.yaml",
-          "https://cgi-cfts.s3.amazonaws.com/utils/vpc.yaml"
-        ],
+        "TemplateURL": {
+          "Fn::If": [
+            "IsIPv6Enabled",
+            "https://cgi-cfts.s3.amazonaws.com/utils/vpc-ipv6.yaml",
+            "https://cgi-cfts.s3.amazonaws.com/utils/vpc.yaml"
+          ]
+        },
         "Parameters": {
-          "AvailabilityZones": [
-            ",",
-            "AvailabilityZones"
-          ],
-          "NumberOfAZs": "NumberOfAZs",
-          "VPCCIDR": "VPCCIDR",
-          "PublicSubnet1CIDR": "PublicSubnet1CIDR",
-          "PublicSubnet2CIDR": "PublicSubnet2CIDR",
-          "PublicSubnet3CIDR": "PublicSubnet3CIDR",
-          "PublicSubnet4CIDR": "PublicSubnet4CIDR",
+          "AvailabilityZones": {
+            "Fn::Split": [
+              ",",
+              { "Ref": "AvailabilityZones" }
+            ]
+          },
+          "NumberOfAZs": { "Ref": "NumberOfAZs" },
+          "VPCCIDR": { "Ref": "VPCCIDR" },
+          "PublicSubnet1CIDR": { "Ref": "PublicSubnet1CIDR" },
+          "PublicSubnet2CIDR": { "Ref": "PublicSubnet2CIDR" },
+          "PublicSubnet3CIDR": { "Ref": "PublicSubnet3CIDR" },
+          "PublicSubnet4CIDR": { "Ref": "PublicSubnet4CIDR" },
           "CreatePrivateSubnets": false
         }
       }
@@ -1069,73 +1087,83 @@
       "Properties": {
         "TemplateURL": "https://cgi-cfts.s3.amazonaws.com/gwlb/gwlb.yaml",
         "Parameters": {
-          "VPC": "VPCStack.Outputs.VPCID",
-          "AutoScaleGroupName": [
-            "GenerateAutoScalingName",
-            [
-              "-",
+          "VPC": { "Fn::GetAtt": [ "VPCStack", "Outputs.VPCID" ] },
+          "AutoScaleGroupName": {
+            "Fn::If": [
+              "GenerateAutoScalingName",
+              {
+                "Fn::Join": [
+                  "-",
+                  [
+                    { "Ref": "AWS::StackName" },
+                    "GatewayGroup"
+                  ]
+                ]
+              },
+              { "Ref": "AutoScaleGroupName" }
+            ]
+          },
+          "GatewaysSubnets": {
+            "Fn::Join": [
+              ",",
               [
-                "AWS::StackName",
-                "GatewayGroup"
-              ]
-            ],
-            "AutoScaleGroupName"
-          ],
-          "GatewaysSubnets": [
-            ",",
-            [
-              "VPCStack.Outputs.PublicSubnet1ID",
-              "VPCStack.Outputs.PublicSubnet2ID",
-              [
-                "3AZs",
-                "VPCStack.Outputs.PublicSubnet3ID",
-                "AWS::NoValue"
-              ],
-              [
-                "4AZs",
-                "VPCStack.Outputs.PublicSubnet4ID",
-                "AWS::NoValue"
+                { "Fn::GetAtt": [ "VPCStack", "Outputs.PublicSubnet1ID" ] },
+                { "Fn::GetAtt": [ "VPCStack", "Outputs.PublicSubnet2ID" ] },
+                {
+                  "Fn::If": [
+                    "3AZs",
+                    { "Fn::GetAtt": [ "VPCStack", "Outputs.PublicSubnet3ID" ] },
+                    { "Ref": "AWS::NoValue" }
+                  ]
+                },
+                {
+                  "Fn::If": [
+                    "4AZs",
+                    { "Fn::GetAtt": [ "VPCStack", "Outputs.PublicSubnet4ID" ] },
+                    { "Ref": "AWS::NoValue" }
+                  ]
+                }
               ]
             ]
-          ],
-          "KeyName": "KeyName",
-          "EnableVolumeEncryption": "EnableVolumeEncryption",
-          "VolumeType": "VolumeType",
-          "VolumeSize": "VolumeSize",
-          "EnableInstanceConnect": "EnableInstanceConnect",
-          "TerminationProtection": "TerminationProtection",
-          "MetaDataToken": "MetaDataToken",
-          "AllowUploadDownload": "AllowUploadDownload",
-          "ManagementServer": "ManagementServer",
-          "ConfigurationTemplate": "ConfigurationTemplate",
-          "AdminEmail": "AdminEmail",
-          "Shell": "Shell",
-          "GWLBName": "GWLBName",
-          "TargetGroupName": "TargetGroupName",
-          "AcceptConnectionRequired": "AcceptConnectionRequired",
-          "CrossZoneLoadBalancing": "CrossZoneLoadBalancing",
-          "GatewayName": "GatewayName",
-          "GatewayInstanceType": "GatewayInstanceType",
-          "GatewaysMinSize": "GatewaysMinSize",
-          "GatewaysMaxSize": "GatewaysMaxSize",
-          "GatewayVersion": "GatewayVersion",
-          "GatewayPasswordHash": "GatewayPasswordHash",
-          "GatewayMaintenancePasswordHash": "GatewayMaintenancePasswordHash",
-          "GatewaySICKey": "GatewaySICKey",
-          "ControlGatewayOverPrivateOrPublicAddress": "ControlGatewayOverPrivateOrPublicAddress",
-          "AllocatePublicAddress": "AllocatePublicAddress",
-          "CloudWatch": "CloudWatch",
-          "GatewayBootstrapScript": "GatewayBootstrapScript",
-          "ManagementDeploy": "ManagementDeploy",
-          "ManagementInstanceType": "ManagementInstanceType",
-          "ManagementVersion": "ManagementVersion",
-          "ManagementPasswordHash": "ManagementPasswordHash",
-          "ManagementMaintenancePasswordHash": "ManagementMaintenancePasswordHash",
-          "GatewaysPolicy": "GatewaysPolicy",
-          "AdminCIDR": "AdminCIDR",
-          "GatewayManagement": "GatewayManagement",
-          "GatewaysAddresses": "GatewaysAddresses",
-          "IPMode": "IPMode"
+          },
+          "KeyName": { "Ref": "KeyName" },
+          "EnableVolumeEncryption": { "Ref": "EnableVolumeEncryption" },
+          "VolumeType": { "Ref": "VolumeType" },
+          "VolumeSize": { "Ref": "VolumeSize" },
+          "EnableInstanceConnect": { "Ref": "EnableInstanceConnect" },
+          "TerminationProtection": { "Ref": "TerminationProtection" },
+          "MetaDataToken": { "Ref": "MetaDataToken" },
+          "AllowUploadDownload": { "Ref": "AllowUploadDownload" },
+          "ManagementServer": { "Ref": "ManagementServer" },
+          "ConfigurationTemplate": { "Ref": "ConfigurationTemplate" },
+          "AdminEmail": { "Ref": "AdminEmail" },
+          "Shell": { "Ref": "Shell" },
+          "GWLBName": { "Ref": "GWLBName" },
+          "TargetGroupName": { "Ref": "TargetGroupName" },
+          "AcceptConnectionRequired": { "Ref": "AcceptConnectionRequired" },
+          "CrossZoneLoadBalancing": { "Ref": "CrossZoneLoadBalancing" },
+          "GatewayName": { "Ref": "GatewayName" },
+          "GatewayInstanceType": { "Ref": "GatewayInstanceType" },
+          "GatewaysMinSize": { "Ref": "GatewaysMinSize" },
+          "GatewaysMaxSize": { "Ref": "GatewaysMaxSize" },
+          "GatewayVersion": { "Ref": "GatewayVersion" },
+          "GatewayPasswordHash": { "Ref": "GatewayPasswordHash" },
+          "GatewayMaintenancePasswordHash": { "Ref": "GatewayMaintenancePasswordHash" },
+          "GatewaySICKey": { "Ref": "GatewaySICKey" },
+          "ControlGatewayOverPrivateOrPublicAddress": { "Ref": "ControlGatewayOverPrivateOrPublicAddress" },
+          "AllocatePublicAddress": { "Ref": "AllocatePublicAddress" },
+          "CloudWatch": { "Ref": "CloudWatch" },
+          "GatewayBootstrapScript": { "Ref": "GatewayBootstrapScript" },
+          "ManagementDeploy": { "Ref": "ManagementDeploy" },
+          "ManagementInstanceType": { "Ref": "ManagementInstanceType" },
+          "ManagementVersion": { "Ref": "ManagementVersion" },
+          "ManagementPasswordHash": { "Ref": "ManagementPasswordHash" },
+          "ManagementMaintenancePasswordHash": { "Ref": "ManagementMaintenancePasswordHash" },
+          "GatewaysPolicy": { "Ref": "GatewaysPolicy" },
+          "AdminCIDR": { "Ref": "AdminCIDR" },
+          "GatewayManagement": { "Ref": "GatewayManagement" },
+          "GatewaysAddresses": { "Ref": "GatewaysAddresses" },
+          "IPMode": { "Ref": "IPMode" }
         }
       }
     }
@@ -1143,28 +1171,28 @@
   "Outputs": {
     "VPCID": {
       "Description": "VPC ID.",
-      "Value": "VPCStack.Outputs.VPCID"
+      "Value": { "Fn::GetAtt": [ "VPCStack", "Outputs.VPCID" ] }
     },
     "ManagementPublicAddress": {
       "Description": "The public address of the management server.",
-      "Value": "GWLBStack.Outputs.ManagementPublicAddress",
+      "Value": { "Fn::GetAtt": [ "GWLBStack", "Outputs.ManagementPublicAddress" ] },
       "Condition": "DeployManagement"
     },
     "ConfigurationTemplateName": {
       "Description": "The name that represents the configuration template. Configurations required to automatically provision the Gateways in the Auto Scaling Group, such as what Security Policy to install and which Blades to enable, will be placed under this template name.",
-      "Value": "GWLBStack.Outputs.ConfigurationTemplateName"
+      "Value": { "Fn::GetAtt": [ "GWLBStack", "Outputs.ConfigurationTemplateName" ] }
     },
     "ControllerName": {
       "Description": "The name that represents the controller. Configurations required to connect to your AWS environment, such as credentials and regions, will be placed under this controller name",
-      "Value": "GWLBStack.Outputs.ControllerName"
+      "Value": { "Fn::GetAtt": [ "GWLBStack", "Outputs.ControllerName" ] }
     },
     "GWLBName": {
       "Description": "Gateway Load Balancer Name.",
-      "Value": "GWLBName"
+      "Value": { "Ref": "GWLBName" }
     },
     "GWLBServiceName": {
       "Description": "Gateway Load Balancer Service Name.",
-      "Value": "GWLBStack.Outputs.GWLBServiceName"
+      "Value": { "Fn::GetAtt": [ "GWLBStack", "Outputs.GWLBServiceName" ] }
     }
   },
   "Rules": {
