@@ -1078,7 +1078,8 @@
           "PublicSubnet2CIDR": { "Ref": "PublicSubnet2CIDR" },
           "PublicSubnet3CIDR": { "Ref": "PublicSubnet3CIDR" },
           "PublicSubnet4CIDR": { "Ref": "PublicSubnet4CIDR" },
-          "CreatePrivateSubnets": false
+          "CreatePrivateSubnets": false,
+          "Version": { "Fn::Join": [ "-", [ { "Ref": "GatewayVersion" }, "GW" ] ] }
         }
       }
     },
