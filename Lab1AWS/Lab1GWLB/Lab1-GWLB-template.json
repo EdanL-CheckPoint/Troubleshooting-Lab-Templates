@@ -215,6 +215,10 @@
     }
   },
   "Parameters": {
+    "CheckAcknowledgement": {
+      "Type": "String",
+      "Default": "TRUE"
+    },
     "AvailabilityZones": {
       "Description": "List of Availability Zones (AZs) to use for the subnets in the VPC. Select at least two.",
       "Type": "List<AWS::EC2::AvailabilityZone::Name>",
