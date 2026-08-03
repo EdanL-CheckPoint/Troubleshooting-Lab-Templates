@@ -1171,6 +1171,174 @@
           "IPMode": { "Ref": "IPMode" }
         }
       }
+    },
+    "WebVPC": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.10.0.0/16",
+        "EnableDnsSupport": true,
+        "EnableDnsHostnames": true,
+        "Tags": [ { "Key": "Name", "Value": "Web-VPC" } ]
+      }
+    },
+    "WebIGW": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [ { "Key": "Name", "Value": "Web-VPC-igw" } ]
+      }
+    },
+    "WebVPCGatewayAttachment": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": { "Ref": "WebVPC" },
+        "InternetGatewayId": { "Ref": "WebIGW" }
+      }
+    },
+    "WebSubnet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "VpcId": { "Ref": "WebVPC" },
+        "CidrBlock": "10.10.0.0/24",
+        "Tags": [ { "Key": "Name", "Value": "web-subnet" } ]
+      }
+    },
+    "WebSubnetRouteTable": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": { "Ref": "WebVPC" },
+        "Tags": [ { "Key": "Name", "Value": "web-subnet-rt" } ]
+      }
+    },
+    "WebSubnetDefaultRoute": {
+      "Type": "AWS::EC2::Route",
+      "DependsOn": "WebVPCGatewayAttachment",
+      "Properties": {
+        "RouteTableId": { "Ref": "WebSubnetRouteTable" },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": { "Ref": "WebIGW" }
+      }
+    },
+    "WebSubnetRouteTableAssociation": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": { "Ref": "WebSubnet" },
+        "RouteTableId": { "Ref": "WebSubnetRouteTable" }
+      }
+    },
+    "WebEpSubnet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "VpcId": { "Ref": "WebVPC" },
+        "CidrBlock": "10.10.10.0/24",
+        "Tags": [ { "Key": "Name", "Value": "web-ep-subnet" } ]
+      }
+    },
+    "WebEpSubnetRouteTable": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": { "Ref": "WebVPC" },
+        "Tags": [ { "Key": "Name", "Value": "web-ep-subnet-rt" } ]
+      }
+    },
+    "WebEpSubnetDefaultRoute": {
+      "Type": "AWS::EC2::Route",
+      "DependsOn": "WebVPCGatewayAttachment",
+      "Properties": {
+        "RouteTableId": { "Ref": "WebEpSubnetRouteTable" },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": { "Ref": "WebIGW" }
+      }
+    },
+    "WebEpSubnetRouteTableAssociation": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": { "Ref": "WebEpSubnet" },
+        "RouteTableId": { "Ref": "WebEpSubnetRouteTable" }
+      }
+    },
+    "AppVPC": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.20.0.0/16",
+        "EnableDnsSupport": true,
+        "EnableDnsHostnames": true,
+        "Tags": [ { "Key": "Name", "Value": "App-VPC" } ]
+      }
+    },
+    "AppIGW": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [ { "Key": "Name", "Value": "App-VPC-igw" } ]
+      }
+    },
+    "AppVPCGatewayAttachment": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": { "Ref": "AppVPC" },
+        "InternetGatewayId": { "Ref": "AppIGW" }
+      }
+    },
+    "AppSubnet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "VpcId": { "Ref": "AppVPC" },
+        "CidrBlock": "10.20.0.0/24",
+        "Tags": [ { "Key": "Name", "Value": "app-subnet" } ]
+      }
+    },
+    "AppSubnetRouteTable": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": { "Ref": "AppVPC" },
+        "Tags": [ { "Key": "Name", "Value": "app-subnet-rt" } ]
+      }
+    },
+    "AppSubnetDefaultRoute": {
+      "Type": "AWS::EC2::Route",
+      "DependsOn": "AppVPCGatewayAttachment",
+      "Properties": {
+        "RouteTableId": { "Ref": "AppSubnetRouteTable" },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": { "Ref": "AppIGW" }
+      }
+    },
+    "AppSubnetRouteTableAssociation": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": { "Ref": "AppSubnet" },
+        "RouteTableId": { "Ref": "AppSubnetRouteTable" }
+      }
+    },
+    "AppEpSubnet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "VpcId": { "Ref": "AppVPC" },
+        "CidrBlock": "10.20.10.0/24",
+        "Tags": [ { "Key": "Name", "Value": "app-ep-subnet" } ]
+      }
+    },
+    "AppEpSubnetRouteTable": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": { "Ref": "AppVPC" },
+        "Tags": [ { "Key": "Name", "Value": "app-ep-subnet-rt" } ]
+      }
+    },
+    "AppEpSubnetDefaultRoute": {
+      "Type": "AWS::EC2::Route",
+      "DependsOn": "AppVPCGatewayAttachment",
+      "Properties": {
+        "RouteTableId": { "Ref": "AppEpSubnetRouteTable" },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": { "Ref": "AppIGW" }
+      }
+    },
+    "AppEpSubnetRouteTableAssociation": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": { "Ref": "AppEpSubnet" },
+        "RouteTableId": { "Ref": "AppEpSubnetRouteTable" }
+      }
     }
   },
   "Outputs": {
