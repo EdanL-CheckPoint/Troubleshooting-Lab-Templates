@@ -15,7 +15,7 @@ mgmt_cli add host name "Web-Server" ip-address "10.10.0.50" -s id.txt --format j
 mgmt_cli add host name "App-Server" ip-address "10.20.0.50" -s id.txt --format json
 
 #Adding access rules
-mgmt_cli add access-rule layer "Network" position "1" name "Allow Web to App" source.1 "Web-Server" source.2 "App-Server" destination.1 "Web-Server" destination.2 "App-Server" service.1 "SSH" service.2 "icmp-proto" action "Accept" -s id.txt --format json
+mgmt_cli add access-rule layer "Network" position "1" name "Allow Web to App" source.1 "Web-Server" source.2 "App-Server" destination.1 "Web-Server" destination.2 "App-Server" service.1 "SSH" service.2 "icmp-proto" action "Accept" track.type "log" -s id.txt --format json
 
 #Publish
 mgmt_cli publish -s id.txt
