@@ -1217,7 +1217,11 @@
       "Properties": {
         "VpcId": { "Ref": "WebVPC" },
         "CidrBlock": "10.10.0.0/24",
-        "Tags": [ { "Key": "Name", "Value": "web-subnet" } ]
+        "Tags": [
+          { "Key": "Name", "Value": "web-subnet" },
+          { "Key": "x-chkp-gwlb-outbound", "Value": "0.0.0.0/0" },
+          { "Key": "x-chkp-gwlb-inbound", "Value": "0.0.0.0/0" }
+        ]
       }
     },
     "WebSubnetRouteTable": {
@@ -1301,7 +1305,11 @@
       "Properties": {
         "VpcId": { "Ref": "AppVPC" },
         "CidrBlock": "10.20.0.0/24",
-        "Tags": [ { "Key": "Name", "Value": "app-subnet" } ]
+        "Tags": [
+          { "Key": "Name", "Value": "app-subnet" },
+          { "Key": "x-chkp-outbound", "Value": "0.0.0.0/0" },
+          { "Key": "x-chkp-inbound", "Value": "0.0.0.0/0" }
+        ]
       }
     },
     "AppSubnetRouteTable": {
