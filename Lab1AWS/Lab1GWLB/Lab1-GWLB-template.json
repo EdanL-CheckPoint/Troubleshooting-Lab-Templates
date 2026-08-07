@@ -68,7 +68,9 @@
             "ManagementPasswordHash",
             "ManagementMaintenancePasswordHash",
             "GatewaysPolicy",
-            "GatewayManagement"
+            "GatewayManagement",
+            "ApacheAMI",
+            "ApacheInstanceType"
           ]
         }
       ],
@@ -210,6 +212,12 @@
         },
         "AutoScaleGroupName": {
           "default": "Auto Scale Group Name"
+        },
+        "ApacheAMI": {
+          "default": "Apache Ubuntu AMI ID"
+        },
+        "ApacheInstanceType": {
+          "default": "Apache Instance type"
         }
       }
     }
@@ -1015,6 +1023,16 @@
       "Type": "String",
       "Default": "ASGlab1",
       "MaxLength": 100
+    },
+    "ApacheAMI": {
+      "Description": "AMI ID for the Apache Ubuntu 24.04 marketplace image (aws-marketplace/Cloud-Infrastructure-Services-Apache-Ubuntu-24-04-2026.06.29.075425-prod-2x6ukdmmzsae6). AMI IDs are region-specific, provide the ID for your deployment region.",
+      "Type": "AWS::EC2::Image::Id",
+      "Default": "ami-0a59eb4ba55e00705"
+    },
+    "ApacheInstanceType": {
+      "Description": "EC2 instance type for the Apache web and app instances.",
+      "Type": "String",
+      "Default": "t3.medium"
     }
   },
   "Conditions": {
@@ -1338,6 +1356,86 @@
       "Properties": {
         "SubnetId": { "Ref": "AppEpSubnet" },
         "RouteTableId": { "Ref": "AppEpSubnetRouteTable" }
+      }
+    },
+    "WebInstanceSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Allow HTTP, HTTPS and SSH to the web instance",
+        "VpcId": { "Ref": "WebVPC" },
+        "SecurityGroupIngress": [
+          { "IpProtocol": "tcp", "FromPort": 80, "ToPort": 80, "CidrIp": "0.0.0.0/0", "Description": "HTTP" },
+          { "IpProtocol": "tcp", "FromPort": 443, "ToPort": 443, "CidrIp": "0.0.0.0/0", "Description": "HTTPS" },
+          { "IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "CidrIp": "0.0.0.0/0", "Description": "SSH" }
+        ],
+        "Tags": [ { "Key": "Name", "Value": "web-instance-sg" } ]
+      }
+    },
+    "WebInstance": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "ImageId": { "Ref": "ApacheAMI" },
+        "InstanceType": { "Ref": "ApacheInstanceType" },
+        "KeyName": { "Ref": "KeyName" },
+        "SubnetId": { "Ref": "WebSubnet" },
+        "PrivateIpAddress": "10.10.0.50",
+        "SecurityGroupIds": [ { "Ref": "WebInstanceSecurityGroup" } ],
+        "Tags": [ { "Key": "Name", "Value": "web-instance" } ]
+      }
+    },
+    "WebInstanceEIP": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [ { "Key": "Name", "Value": "web-instance-eip" } ]
+      }
+    },
+    "WebInstanceEIPAssociation": {
+      "Type": "AWS::EC2::EIPAssociation",
+      "DependsOn": "WebVPCGatewayAttachment",
+      "Properties": {
+        "AllocationId": { "Fn::GetAtt": [ "WebInstanceEIP", "AllocationId" ] },
+        "InstanceId": { "Ref": "WebInstance" }
+      }
+    },
+    "AppInstanceSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Allow HTTP, HTTPS and SSH to the app instance",
+        "VpcId": { "Ref": "AppVPC" },
+        "SecurityGroupIngress": [
+          { "IpProtocol": "tcp", "FromPort": 80, "ToPort": 80, "CidrIp": "0.0.0.0/0", "Description": "HTTP" },
+          { "IpProtocol": "tcp", "FromPort": 443, "ToPort": 443, "CidrIp": "0.0.0.0/0", "Description": "HTTPS" },
+          { "IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "CidrIp": "0.0.0.0/0", "Description": "SSH" }
+        ],
+        "Tags": [ { "Key": "Name", "Value": "app-instance-sg" } ]
+      }
+    },
+    "AppInstance": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "ImageId": { "Ref": "ApacheAMI" },
+        "InstanceType": { "Ref": "ApacheInstanceType" },
+        "KeyName": { "Ref": "KeyName" },
+        "SubnetId": { "Ref": "AppSubnet" },
+        "PrivateIpAddress": "10.20.0.50",
+        "SecurityGroupIds": [ { "Ref": "AppInstanceSecurityGroup" } ],
+        "Tags": [ { "Key": "Name", "Value": "app-instance" } ]
+      }
+    },
+    "AppInstanceEIP": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [ { "Key": "Name", "Value": "app-instance-eip" } ]
+      }
+    },
+    "AppInstanceEIPAssociation": {
+      "Type": "AWS::EC2::EIPAssociation",
+      "DependsOn": "AppVPCGatewayAttachment",
+      "Properties": {
+        "AllocationId": { "Fn::GetAtt": [ "AppInstanceEIP", "AllocationId" ] },
+        "InstanceId": { "Ref": "AppInstance" }
       }
     }
   },
