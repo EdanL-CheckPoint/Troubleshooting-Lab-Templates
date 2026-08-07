@@ -1217,6 +1217,7 @@
       "Properties": {
         "VpcId": { "Ref": "WebVPC" },
         "CidrBlock": "10.10.0.0/24",
+        "AvailabilityZone": "eu-central-1a",
         "Tags": [
           { "Key": "Name", "Value": "web-subnet" },
           { "Key": "x-chkp-gwlb-outbound", "Value": "0.0.0.0/0" },
@@ -1252,6 +1253,7 @@
       "Properties": {
         "VpcId": { "Ref": "WebVPC" },
         "CidrBlock": "10.10.10.0/24",
+        "AvailabilityZone": "eu-central-1a",
         "Tags": [ { "Key": "Name", "Value": "web-ep-subnet" } ]
       }
     },
@@ -1305,6 +1307,7 @@
       "Properties": {
         "VpcId": { "Ref": "AppVPC" },
         "CidrBlock": "10.20.0.0/24",
+        "AvailabilityZone": "eu-central-1b",
         "Tags": [
           { "Key": "Name", "Value": "app-subnet" },
           { "Key": "x-chkp-outbound", "Value": "0.0.0.0/0" },
@@ -1340,6 +1343,7 @@
       "Properties": {
         "VpcId": { "Ref": "AppVPC" },
         "CidrBlock": "10.20.10.0/24",
+        "AvailabilityZone": "eu-central-1b",
         "Tags": [ { "Key": "Name", "Value": "app-ep-subnet" } ]
       }
     },
